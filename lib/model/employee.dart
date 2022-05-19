@@ -9,29 +9,29 @@ Employee employeeFromJson(String str) => Employee.fromJson(json.decode(str));
 String employeeToJson(Employee data) => json.encode(data.toJson());
 
 class Employee {
-    Employee({
-        this.id,
-        this.name,
-        this.username,
-        this.email,
-        this.profileImage,
-        this.address,
-        this.phone,
-        this.website,
-        this.company,
-    });
+  Employee({
+    this.id,
+    this.name,
+    this.username,
+    this.email,
+    this.profileImage,
+    this.address,
+    this.phone,
+    this.website,
+    this.company,
+  });
 
-    int? id;
-    String? name;
-    String? username;
-    String? email;
-    String? profileImage;
-    Address? address;
-    dynamic phone;
-    String? website;
-    Company? company;
+  int? id;
+  String? name;
+  String? username;
+  String? email;
+  String? profileImage;
+  Address? address;
+  dynamic phone;
+  String? website;
+  Company? company;
 
-    factory Employee.fromJson(Map<String, dynamic> json) => Employee(
+  factory Employee.fromJson(Map<String, dynamic> json) => Employee(
         id: json["id"],
         name: json["name"],
         username: json["username"],
@@ -40,10 +40,12 @@ class Employee {
         address: Address.fromJson(json["address"]),
         phone: json["phone"],
         website: json["website"],
-        company: Company.fromJson(json["company"]),
-    );
+        company: json["company"] != null
+            ? Company.fromJson(json["company"])
+            : Company(),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "username": username,
@@ -53,81 +55,81 @@ class Employee {
         "phone": phone,
         "website": website,
         "company": company?.toJson(),
-    };
+      };
 }
 
 class Address {
-    Address({
-        this.street,
-        this.suite,
-        this.city,
-        this.zipcode,
-        this.geo,
-    });
+  Address({
+    this.street,
+    this.suite,
+    this.city,
+    this.zipcode,
+    this.geo,
+  });
 
-    String? street;
-    String? suite;
-    String? city;
-    String? zipcode;
-    Geo? geo;
+  String? street;
+  String? suite;
+  String? city;
+  String? zipcode;
+  Geo? geo;
 
-    factory Address.fromJson(Map<String, dynamic> json) => Address(
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
         street: json["street"],
         suite: json["suite"],
         city: json["city"],
         zipcode: json["zipcode"],
         geo: Geo.fromJson(json["geo"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "street": street,
         "suite": suite,
         "city": city,
         "zipcode": zipcode,
         "geo": geo?.toJson(),
-    };
+      };
 }
 
 class Geo {
-    Geo({
-        this.lat,
-        this.lng,
-    });
+  Geo({
+    this.lat,
+    this.lng,
+  });
 
-    String? lat;
-    String? lng;
+  String? lat;
+  String? lng;
 
-    factory Geo.fromJson(Map<String, dynamic> json) => Geo(
+  factory Geo.fromJson(Map<String, dynamic> json) => Geo(
         lat: json["lat"],
         lng: json["lng"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "lat": lat,
         "lng": lng,
-    };
+      };
 }
 
 class Company {
-    Company({
-        this.name,
-        this.catchPhrase,
-        this.bs,
-    });
+  Company({
+    this.name,
+    this.catchPhrase,
+    this.bs,
+  });
 
-    String? name;
-    String? catchPhrase;
-    String? bs;
+  String? name;
+  String? catchPhrase;
+  String? bs;
 
-    factory Company.fromJson(Map<String, dynamic> json) => Company(
+  factory Company.fromJson(Map<String, dynamic> json) => Company(
         name: json["name"],
         catchPhrase: json["catchPhrase"],
         bs: json["bs"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "name": name,
         "catchPhrase": catchPhrase,
         "bs": bs,
-    };
+      };
 }

@@ -14,10 +14,31 @@ class Home extends StatelessWidget {
           builder: (context, provider, child) {
             return provider.loading
                 ? const Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: provider.employees.length,
-                    itemBuilder: (context, index) =>
-                        EmployeeCard(employee: provider.employees[index]));
+                : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          child: TextField(
+                            onChanged: provider.filterSearchResults,
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.only(left: 30),
+                                hintText: "Search name..."),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: provider.employees.length,
+                            itemBuilder: (context, index) => EmployeeCard(
+                                employee: provider.employees[index])),
+                      ),
+                    ],
+                  );
           },
         ),
       ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:employe_directory/model/employee.dart';
 import 'package:hive/hive.dart';
 
@@ -8,17 +10,19 @@ class StorageService {
     Map<String, dynamic> data = {
       "employees": employees.map((e) => e.toJson()).toList()
     };
-    print(data);
-    employeeBox.put("employee", data);
+    // employeeBox.put("employee", data);
   }
 
   loadEmployees(List<Employee> employees) {
     employees.clear();
-    // employeeBox.get("employee");
     var data = employeeBox.get("employee");
+
     if (data != null) {
-      data["employees"]
-          .forEach((employee) => employees.add(Employee.fromJson(employee)));
+      List<dynamic> dt = data["employees"];
+      dt.map((e) => Employee.fromJson(e));
+      // dt.forEach((element) {
+      //   Employee.fromJson(element);
+      // });
     }
   }
 }

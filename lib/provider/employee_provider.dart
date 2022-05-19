@@ -9,6 +9,7 @@ class EmployeeProvider with ChangeNotifier {
   }
 
   List<Employee> employees = [];
+  List<Employee> employeesDuplicate = [];
   bool loading = true;
 
   getEmployees() async {
@@ -19,6 +20,27 @@ class EmployeeProvider with ChangeNotifier {
       await StorageService().saveEmployees(employees);
     }
     loading = false;
+    employeesDuplicate.addAll(employees);
     notifyListeners();
+  }
+
+  filterSearchResults(String query) async {
+    if (query.isNotEmpty) {
+      List<Employee> dummyListData = [];
+      employeesDuplicate.forEach((item) {
+        if (item.name != null) {
+          if (item.name!.toLowerCase().contains(query.toLowerCase())) {
+            dummyListData.add(item);
+          }
+        }
+      });
+      employees.clear();
+      employees.addAll(dummyListData);
+      notifyListeners();
+    } else {
+      employees.clear();
+      employees.addAll(employeesDuplicate);
+      notifyListeners();
+    }
   }
 }

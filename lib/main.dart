@@ -1,9 +1,19 @@
+import 'dart:io';
+
 import 'package:employe_directory/provider/employee_provider.dart';
 import 'package:employe_directory/ui/home.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var path = await getApplicationDocumentsDirectory();
+  Hive.init(path.path);
+
+  await Hive.openBox('employee');
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => EmployeeProvider()),
   ], child: const MyApp()));

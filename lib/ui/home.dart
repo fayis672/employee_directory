@@ -8,17 +8,18 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Employee Directory")),
-      body: Consumer<EmployeeProvider>(
-        builder: (context, provider, child) {
-          return provider.loading
-              ? const CircularProgressIndicator()
-              : ListView.builder(
-                  itemCount: provider.employees.length,
-                  itemBuilder: (context, index) =>
-                      EmployeeCard(employee: provider.employees[index]));
-        },
+    return SafeArea(
+      child: Scaffold(
+        body: Consumer<EmployeeProvider>(
+          builder: (context, provider, child) {
+            return provider.loading
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: provider.employees.length,
+                    itemBuilder: (context, index) =>
+                        EmployeeCard(employee: provider.employees[index]));
+          },
+        ),
       ),
     );
   }
